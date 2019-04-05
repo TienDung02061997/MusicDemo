@@ -22,7 +22,6 @@ public class MusicService extends Service {
     public static final String ACTION_PLAY = "ACTION_PLAY";
 
 
-
     private MediaPlayer mMediaPlayer;
 
     public MusicService() {
@@ -33,7 +32,7 @@ public class MusicService extends Service {
     @Override
     public void onCreate() {
         // Create music
-        mMediaPlayer =MediaPlayer.create(getBaseContext(),R.raw.banduyen);
+        mMediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.banduyen);
         mMediaPlayer.setLooping(true);
         mMediaPlayer.start();
         super.onCreate();
@@ -43,7 +42,6 @@ public class MusicService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
             String action = intent.getAction();
-
             switch (action) {
                 case ACTION_START_SERVICE:
                     startForegroundService();
@@ -54,89 +52,72 @@ public class MusicService extends Service {
                     } else {
                         mMediaPlayer.start();
                     }
-
                     break;
-
                 case ACTION_PAUSE:
-
-                    if (mMediaPlayer.isPlaying()){
+                    if (mMediaPlayer.isPlaying()) {
                         mMediaPlayer.pause();
                         Toast.makeText(getApplicationContext(), "Pause  Music", Toast.LENGTH_LONG).show();
-                    }
-                    else {
+                    } else {
                         Toast.makeText(getApplicationContext(), " Error pause", Toast.LENGTH_LONG).show();
-
                     }
                     break;
-
-
-                }
-
             }
-            return super.onStartCommand(intent, flags, startId);
         }
+        return super.onStartCommand(intent, flags, startId);
+    }
 
+    private void startForegroundService() {
+        Toast.makeText(getApplicationContext(), " service is started.", Toast.LENGTH_SHORT).show();
 
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setSmallIcon(R.drawable.ic_android_black_24dp);
+        builder.setPriority(1);
+        // Add Play button intent in notification.
+        Intent playIntent = new Intent(this, MusicService.class);
+        playIntent.setAction(ACTION_PLAY);
+        PendingIntent pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, 0);
+        NotificationCompat.Action playAction = new NotificationCompat.Action(android.R.drawable.ic_media_play, "Play", pendingPlayIntent);
+        builder.addAction(playAction);
+        // Add Pause button intent in notification.
+        Intent pauseIntent = new Intent(this, MusicService.class);
+        pauseIntent.setAction(ACTION_PAUSE);
+        PendingIntent pendingPrevIntent = PendingIntent.getService(this, 0, pauseIntent, 0);
+        NotificationCompat.Action prevAction = new NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingPrevIntent);
+        builder.addAction(prevAction);
+        Notification notification = builder.build();
 
-        private void startForegroundService () {
-            Toast.makeText(getApplicationContext(), " service is started.", Toast.LENGTH_SHORT).show();
+        startForeground(1, notification);
+    }
 
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Toast.makeText(this, "bound Service destroy", Toast.LENGTH_SHORT).show();
+        stopSelf();
+        return super.onUnbind(intent);
+    }
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-            builder.setSmallIcon(R.drawable.ic_android_black_24dp);
-            builder.setPriority(1);
+    @Override
+    public void onRebind(Intent intent) {
+        super.onRebind(intent);
+    }
 
-            // Add Play button intent in notification.
-            Intent playIntent = new Intent(this, MusicService.class);
-            playIntent.setAction(ACTION_PLAY);
-            PendingIntent pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, 0);
-            NotificationCompat.Action playAction = new NotificationCompat.Action(android.R.drawable.ic_media_play, "Play", pendingPlayIntent);
-            builder.addAction(playAction);
+    @Override
+    public void onDestroy() {
+        Toast.makeText(this, ACTION_STOP_SERVICE, Toast.LENGTH_SHORT).show();
 
-            // Add Pause button intent in notification.
-            Intent pauseIntent = new Intent(this, MusicService.class);
-            pauseIntent.setAction(ACTION_PAUSE);
-            PendingIntent pendingPrevIntent = PendingIntent.getService(this, 0, pauseIntent, 0);
-            NotificationCompat.Action prevAction = new NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingPrevIntent);
-            builder.addAction(prevAction);
+        stopForeground(true);
+        mMediaPlayer.stop();
+        super.onDestroy();
+    }
 
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
-            Notification notification = builder.build();
-
-            startForeground(1, notification);
-
-        }
-
-        @Override
-        public boolean onUnbind (Intent intent){
-            Toast.makeText(this, "bound Service destroy", Toast.LENGTH_SHORT).show();
-             stopSelf();
-            return super.onUnbind(intent);
-        }
-
-        @Override
-        public void onRebind (Intent intent){
-            super.onRebind(intent);
-        }
-
-        @Override
-        public void onDestroy () {
-            Toast.makeText(this, ACTION_STOP_SERVICE, Toast.LENGTH_SHORT).show();
-
-            stopForeground(true);
-            mMediaPlayer.stop();
-            super.onDestroy();
-        }
-
-        @Override
-        public IBinder onBind (Intent intent){
-            return null;
-        }
-
-
-        public  class  MyConnections extends Binder{
-               MusicService  getConnection(){
-                   return MusicService.this;
-               }
+    public class MyConnections extends Binder {
+        MusicService getConnection() {
+            return MusicService.this;
         }
     }
+}
