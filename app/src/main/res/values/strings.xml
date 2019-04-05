@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">music demo</string>
+    <string name="MusicPlay">Music Play</string>
+    <string name="PauseMusic">Pause  Music</string>
+    <string name="Errorpause">Error pause</string>
+    <string name="servicestarted">service is started.</string>
+    <string name="boundServicedestroy">bound Service destroy</string>
 </resources>

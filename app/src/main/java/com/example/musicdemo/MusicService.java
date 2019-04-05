@@ -11,23 +11,15 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 public class MusicService extends Service {
-
-
     public static final String ACTION_START_SERVICE = "ACTION_START_SERVICE";
-
     public static final String ACTION_STOP_SERVICE = "ACTION_STOP_SERVICE";
-
     public static final String ACTION_PAUSE = "ACTION_PAUSE";
-
     public static final String ACTION_PLAY = "ACTION_PLAY";
-
-
     private MediaPlayer mMediaPlayer;
 
     public MusicService() {
 
     }
-
 
     @Override
     public void onCreate() {
@@ -48,7 +40,7 @@ public class MusicService extends Service {
                     break;
                 case ACTION_PLAY:
                     if (mMediaPlayer.isPlaying()) {
-                        Toast.makeText(getApplicationContext(), "Music Play", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.MusicPlay), Toast.LENGTH_LONG).show();
                     } else {
                         mMediaPlayer.start();
                     }
@@ -56,9 +48,9 @@ public class MusicService extends Service {
                 case ACTION_PAUSE:
                     if (mMediaPlayer.isPlaying()) {
                         mMediaPlayer.pause();
-                        Toast.makeText(getApplicationContext(), "Pause  Music", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.PauseMusic), Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), " Error pause", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.Errorpause), Toast.LENGTH_LONG).show();
                     }
                     break;
             }
@@ -67,7 +59,7 @@ public class MusicService extends Service {
     }
 
     private void startForegroundService() {
-        Toast.makeText(getApplicationContext(), " service is started.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getString(R.string.servicestarted), Toast.LENGTH_SHORT).show();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.drawable.ic_android_black_24dp);
@@ -85,13 +77,13 @@ public class MusicService extends Service {
         NotificationCompat.Action prevAction = new NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingPrevIntent);
         builder.addAction(prevAction);
         Notification notification = builder.build();
-
+        //startForeground
         startForeground(1, notification);
     }
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Toast.makeText(this, "bound Service destroy", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.boundServicedestroy), Toast.LENGTH_SHORT).show();
         stopSelf();
         return super.onUnbind(intent);
     }

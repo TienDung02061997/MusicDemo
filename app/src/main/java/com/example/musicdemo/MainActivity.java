@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    ServiceConnection mServiceConnection = new ServiceConnection() {
+   protected ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             MusicService.MyConnections myConnections = (MusicService.MyConnections) service;
