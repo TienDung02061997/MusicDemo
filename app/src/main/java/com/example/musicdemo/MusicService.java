@@ -16,6 +16,7 @@ public class MusicService extends Service {
     public static final String ACTION_PAUSE = "ACTION_PAUSE";
     public static final String ACTION_PLAY = "ACTION_PLAY";
     private MediaPlayer mMediaPlayer;
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
     public MusicService() {
 
@@ -58,24 +59,12 @@ public class MusicService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void startForegroundService() {
+    public void startForegroundService() {
         Toast.makeText(getApplicationContext(), getString(R.string.servicestarted), Toast.LENGTH_SHORT).show();
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.drawable.ic_android_black_24dp);
         builder.setPriority(1);
-        // Add Play button intent in notification.
-        Intent playIntent = new Intent(this, MusicService.class);
-        playIntent.setAction(ACTION_PLAY);
-        PendingIntent pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, 0);
-        NotificationCompat.Action playAction = new NotificationCompat.Action(android.R.drawable.ic_media_play, "Play", pendingPlayIntent);
-        builder.addAction(playAction);
-        // Add Pause button intent in notification.
-        Intent pauseIntent = new Intent(this, MusicService.class);
-        pauseIntent.setAction(ACTION_PAUSE);
-        PendingIntent pendingPrevIntent = PendingIntent.getService(this, 0, pauseIntent, 0);
-        NotificationCompat.Action prevAction = new NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingPrevIntent);
-        builder.addAction(prevAction);
+        delarePlayinNotification();
+        delarePauseinNotification();
         Notification notification = builder.build();
         //startForeground
         startForeground(1, notification);
@@ -96,7 +85,6 @@ public class MusicService extends Service {
     @Override
     public void onDestroy() {
         Toast.makeText(this, ACTION_STOP_SERVICE, Toast.LENGTH_SHORT).show();
-
         stopForeground(true);
         mMediaPlayer.stop();
         super.onDestroy();
@@ -111,5 +99,22 @@ public class MusicService extends Service {
         MusicService getConnection() {
             return MusicService.this;
         }
+    }
+
+    private void delarePlayinNotification() {
+
+        Intent playIntent = new Intent(this, MusicService.class);
+        playIntent.setAction(ACTION_PLAY);
+        PendingIntent pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, 0);
+        NotificationCompat.Action playAction = new NotificationCompat.Action(android.R.drawable.ic_media_play, "Play", pendingPlayIntent);
+        builder.addAction(playAction);
+    }
+
+    private void delarePauseinNotification() {
+        Intent pauseIntent = new Intent(this, MusicService.class);
+        pauseIntent.setAction(ACTION_PAUSE);
+        PendingIntent pendingPrevIntent = PendingIntent.getService(this, 0, pauseIntent, 0);
+        NotificationCompat.Action prevAction = new NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingPrevIntent);
+        builder.addAction(prevAction);
     }
 }
