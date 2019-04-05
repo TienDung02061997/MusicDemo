@@ -61,12 +61,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mcheck = false;
         }
     };
-//
-//    @Override
-//    protected void onPause() {
-//        unbindService(mServiceConnection);
-//        super.onPause();
-//    }
 
     @Override
     protected void onStop() {

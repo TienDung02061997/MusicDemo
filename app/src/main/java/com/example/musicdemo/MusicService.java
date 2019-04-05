@@ -42,7 +42,7 @@ public class MusicService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
-            String action = intent.getAction();//lay ra action cua intent(lay ra hoat dong chung duoc thuc hien)
+            String action = intent.getAction();
 
             switch (action) {
                 case ACTION_START_SERVICE:
@@ -76,15 +76,6 @@ public class MusicService extends Service {
             return super.onStartCommand(intent, flags, startId);
         }
 
-//    private void stopForegroundService() {
-//        Toast.makeText(this,ACTION_STOP_SERVICE , Toast.LENGTH_SHORT).show();
-//
-//        // Stop foreground service and remove the notification.
-//        stopForeground(true);
-//        mMediaPlayer.stop();
-//        // Stop the foreground service.
-//        stopSelf();
-//    }
 
 
         private void startForegroundService () {
@@ -92,13 +83,8 @@ public class MusicService extends Service {
 
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-
-
             builder.setSmallIcon(R.drawable.ic_android_black_24dp);
-            // Make the notification max priority.
             builder.setPriority(1);
-            // Make head-up notification.
-
 
             // Add Play button intent in notification.
             Intent playIntent = new Intent(this, MusicService.class);
@@ -114,12 +100,10 @@ public class MusicService extends Service {
             NotificationCompat.Action prevAction = new NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingPrevIntent);
             builder.addAction(prevAction);
 
-            // Build the notification.
+
             Notification notification = builder.build();
 
-            // Start foreground service.
             startForeground(1, notification);
-
 
         }
 
@@ -139,7 +123,6 @@ public class MusicService extends Service {
         public void onDestroy () {
             Toast.makeText(this, ACTION_STOP_SERVICE, Toast.LENGTH_SHORT).show();
 
-            // Stop foreground service and remove the notification.
             stopForeground(true);
             mMediaPlayer.stop();
             super.onDestroy();
