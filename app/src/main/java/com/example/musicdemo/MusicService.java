@@ -41,7 +41,7 @@ public class MusicService extends Service {
                     break;
                 case ACTION_PLAY:
                     if (mMediaPlayer.isPlaying()) {
-                        Toast.makeText(getApplicationContext(), getString(R.string.MusicPlay), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.msg_music_play), Toast.LENGTH_LONG).show();
                     } else {
                         mMediaPlayer.start();
                     }
@@ -49,9 +49,9 @@ public class MusicService extends Service {
                 case ACTION_PAUSE:
                     if (mMediaPlayer.isPlaying()) {
                         mMediaPlayer.pause();
-                        Toast.makeText(getApplicationContext(), getString(R.string.PauseMusic), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.msg_pause_music), Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.Errorpause), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.msg_pause_error), Toast.LENGTH_LONG).show();
                     }
                     break;
             }
@@ -60,7 +60,7 @@ public class MusicService extends Service {
     }
 
     public void startForegroundService() {
-        Toast.makeText(getApplicationContext(), getString(R.string.servicestarted), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), getString(R.string.msg_servicestarted), Toast.LENGTH_SHORT).show();
         builder.setSmallIcon(R.drawable.ic_android_black_24dp);
         builder.setPriority(1);
         delarePlayinNotification();
@@ -72,7 +72,7 @@ public class MusicService extends Service {
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Toast.makeText(this, getString(R.string.boundServicedestroy), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.msg_boundServicedestroy), Toast.LENGTH_SHORT).show();
         stopSelf();
         return super.onUnbind(intent);
     }
