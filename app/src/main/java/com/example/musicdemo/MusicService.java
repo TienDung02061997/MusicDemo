@@ -11,24 +11,15 @@ import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
 public class MusicService extends Service {
-
-
     public static final String ACTION_START_SERVICE = "ACTION_START_SERVICE";
-
     public static final String ACTION_STOP_SERVICE = "ACTION_STOP_SERVICE";
-
     public static final String ACTION_PAUSE = "ACTION_PAUSE";
-
     public static final String ACTION_PLAY = "ACTION_PLAY";
-
-
-
     private MediaPlayer mMediaPlayer;
 
     public MusicService() {
 
     }
-
 
     @Override
     public void onCreate() {
@@ -43,7 +34,6 @@ public class MusicService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
             String action = intent.getAction();//lay ra action cua intent(lay ra hoat dong chung duoc thuc hien)
-
             switch (action) {
                 case ACTION_START_SERVICE:
                     startForegroundService();
@@ -68,10 +58,7 @@ public class MusicService extends Service {
 
                     }
                     break;
-
-
                 }
-
             }
             return super.onStartCommand(intent, flags, startId);
         }
@@ -87,37 +74,43 @@ public class MusicService extends Service {
 //    }
 
 
+    @Override
+    public boolean onUnbind(Intent intent) {
+        Toast.makeText(this, getString(R.string.msg_boundServicedestroy), Toast.LENGTH_SHORT).show();
+
+        return super.onUnbind(intent);
+    }
+
+
         private void startForegroundService () {
             Toast.makeText(getApplicationContext(), " service is started.", Toast.LENGTH_SHORT).show();
 
 
+
+    @Override
+    public void onDestroy() {
+        Toast.makeText(this, ACTION_STOP_SERVICE, Toast.LENGTH_SHORT).show();
+        stopForeground(true);
+        mMediaPlayer.stop();
+        super.onDestroy();
+    }
+
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-
-
             builder.setSmallIcon(R.drawable.ic_android_black_24dp);
-            // Make the notification max priority.
             builder.setPriority(1);
-            // Make head-up notification.
-
-
-            // Add Play button intent in notification.
             Intent playIntent = new Intent(this, MusicService.class);
             playIntent.setAction(ACTION_PLAY);
             PendingIntent pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, 0);
             NotificationCompat.Action playAction = new NotificationCompat.Action(android.R.drawable.ic_media_play, "Play", pendingPlayIntent);
             builder.addAction(playAction);
 
-            // Add Pause button intent in notification.
+
             Intent pauseIntent = new Intent(this, MusicService.class);
             pauseIntent.setAction(ACTION_PAUSE);
             PendingIntent pendingPrevIntent = PendingIntent.getService(this, 0, pauseIntent, 0);
             NotificationCompat.Action prevAction = new NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingPrevIntent);
             builder.addAction(prevAction);
-
-            // Build the notification.
             Notification notification = builder.build();
-
-            // Start foreground service.
             startForeground(1, notification);
 
 
@@ -139,7 +132,6 @@ public class MusicService extends Service {
         public void onDestroy () {
             Toast.makeText(this, ACTION_STOP_SERVICE, Toast.LENGTH_SHORT).show();
 
-            // Stop foreground service and remove the notification.
             stopForeground(true);
             mMediaPlayer.stop();
             super.onDestroy();

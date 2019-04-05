@@ -8,10 +8,11 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     MusicService mMusicService;
-    boolean mcheck = false;
+    private boolean mCheck;
     private Button mButtonStart, mButtonStop;
 
     @Override
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_stop:
                 stopService(intent);
-
+                unbindService(mServiceConnection);
                 break;
         }
     }
@@ -57,20 +58,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onServiceConnected(ComponentName name, IBinder service) {
             MusicService.MyConnections myConnections = (MusicService.MyConnections) service;
             mMusicService = myConnections.getConnection();
-            mcheck = true;
+            mCheck = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mcheck = false;
+            mCheck = false;
         }
     };
-//
-//    @Override
-//    protected void onPause() {
-//        unbindService(mServiceConnection);
-//        super.onPause();
-//    }
 
     @Override
     protected void onStop() {
