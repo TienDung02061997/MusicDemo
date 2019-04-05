@@ -11,8 +11,8 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     MusicService mMusicService;
-    p boolean mcheck = false;
-    private Button mButtubliconStart, mButtonStop;
+    boolean mcheck = false;
+    private Button mButtonStart, mButtonStop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

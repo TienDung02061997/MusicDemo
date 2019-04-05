@@ -126,7 +126,7 @@ public class MusicService extends Service {
         @Override
         public boolean onUnbind (Intent intent){
             Toast.makeText(this, "bound Service destroy", Toast.LENGTH_SHORT).show();
-            stopSelf();
+             stopSelf();
             return super.onUnbind(intent);
         }
 
@@ -142,7 +142,6 @@ public class MusicService extends Service {
             // Stop foreground service and remove the notification.
             stopForeground(true);
             mMediaPlayer.stop();
-            // Stop the foreground service.
             super.onDestroy();
         }
 
