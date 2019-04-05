@@ -10,31 +10,27 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    MusicService mMusicService;
-    boolean mcheck = false;
+    protected MusicService mMusicService;
+    protected boolean mcheck = false;
     private Button mButtonStart, mButtonStop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        msetfindbyid();
-        msetClick();
-
-
+        setFindViewById();
+        setEvent();
     }
 
-    private void msetfindbyid() {
+    private void setFindViewById() {
         mButtonStart = (Button) findViewById(R.id.btn_start);
         mButtonStop = (Button) findViewById(R.id.btn_stop);
     }
 
-
-    private void msetClick() {
+    private void setEvent() {
         mButtonStart.setOnClickListener(this);
         mButtonStop.setOnClickListener(this);
     }
-
 
     @Override
     public void onClick(View v) {
