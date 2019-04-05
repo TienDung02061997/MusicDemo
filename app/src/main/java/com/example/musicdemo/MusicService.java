@@ -10,6 +10,8 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import static android.support.v4.app.NotificationCompat.PRIORITY_HIGH;
+
 public class MusicService extends Service {
     public static final String ACTION_START_SERVICE = "ACTION_START_SERVICE";
     public static final String ACTION_STOP_SERVICE = "ACTION_STOP_SERVICE";
@@ -62,7 +64,7 @@ public class MusicService extends Service {
     public void startForegroundService() {
         Toast.makeText(getApplicationContext(), getString(R.string.msg_servicestarted), Toast.LENGTH_SHORT).show();
         builder.setSmallIcon(R.drawable.ic_android_black_24dp);
-        builder.setPriority(1);
+        builder.setPriority(PRIORITY_HIGH);
         delarePlayinNotification();
         delarePauseinNotification();
         Notification notification = builder.build();
