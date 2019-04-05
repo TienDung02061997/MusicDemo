@@ -18,7 +18,7 @@ public class MusicService extends Service {
     public static final String ACTION_PAUSE = "ACTION_PAUSE";
     public static final String ACTION_PLAY = "ACTION_PLAY";
     private MediaPlayer mMediaPlayer;
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+    protected NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
     public MusicService() {
 
