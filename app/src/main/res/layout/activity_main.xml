@@ -6,13 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
     <Button
         android:id="@+id/btn_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Start Music"
+        android:text="@string/action_start_service"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -21,8 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
-        android:text="Stop Music"
+        android:text="@string/action_stop_service"
         app:layout_constraintTop_toBottomOf="@+id/btn_start"
         tools:layout_editor_absoluteX="0dp" />
-
 </android.support.constraint.ConstraintLayout>
