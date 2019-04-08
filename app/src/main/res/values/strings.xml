@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">music demo</string>
+    <string name="msg_music_play">Music Play</string>
+    <string name="msg_pause_music">Pause  Music</string>
+    <string name="msg_pause_error">Error pause</string>
+    <string name="msg_servicestarted">service is started</string>
+    <string name="msg_boundServicedestroy">bound Service destroy</string>
+    <string name="action_start_service">Start Music</string>
+    <string name="action_stop_service">Stop Music</string>
 </resources>
