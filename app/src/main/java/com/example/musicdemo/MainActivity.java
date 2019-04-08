@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonStart.setOnClickListener(this);
         mButtonStop.setOnClickListener(this);
     }
-
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(this, MusicService.class);
